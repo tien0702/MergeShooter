@@ -4,12 +4,22 @@ using UnityEngine;
 
 public class SlotMergeController : MonoBehaviour
 {
-    ObjectMergeController objInSlot;
-    public ObjectMergeController ObjInSlot => objInSlot;
+    [SerializeField] protected MergeObjectController objInSlot;
+    public MergeObjectController ObjInSlot => objInSlot;
 
-    public ObjectMergeController TakeOut()
+    private void Awake()
     {
-        ObjectMergeController result = null;
+
+    }
+
+    void OnChildAdded()
+    {
+
+    }
+
+    public MergeObjectController TakeOut()
+    {
+        MergeObjectController result = null;
         if (objInSlot != null)
         {
             result = objInSlot;
@@ -20,15 +30,18 @@ public class SlotMergeController : MonoBehaviour
         return result;
     }
 
-    public ObjectMergeController PutIn(ObjectMergeController obj)
+    public void PutIn(MergeObjectController obj)
     {
-        if (objInSlot != null)
+        /*if (objInSlot != null)
         {
             objInSlot.transform.SetParent(null);
-            return objInSlot;
         }
+        else
+        {
+            this.objInSlot = obj;
+            this.objInSlot.transform.SetParent(transform);
+        }*/
         this.objInSlot = obj;
         this.objInSlot.transform.SetParent(transform);
-        return null;
     }
 }

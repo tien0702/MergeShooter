@@ -8,24 +8,29 @@ public class DropMergeObject : TTMonoBehaviour, IOnTouchEnded
 {
     [SerializeField] LayerMask slotMask;
 
-    ObjectMergeController mergeController;
+    MergeObjectController mergeController;
 
     private void Awake()
     {
-        mergeController = GetComponent<ObjectMergeController>();
+        mergeController = GetComponent<MergeObjectController>();
     }
 
     public void OnTouchEnded()
     {
-        var mergeObject = ObjectMergeController.GetMergeNearest(mergeController);
+        var mergeObject = MergeObjectController.GetMergeNearest(mergeController);
         if (mergeObject != null)
         {
             if (mergeController.CanMerge(mergeObject))
             {
-                mergeController.Merge(mergeObject, null);
+                var newSlot = mergeObject.GetComponentInParent<SlotMergeController>();
+                mergeController.Merge(mergeObject, () => {
+                    newSlot.PutIn(mergeController);
+                });
             }
             else
             {
+                mergeController.GetComponentInParent<SlotMergeController>();
+                mergeObject.GetComponentInParent<SlotMergeController>();
                 Transform newParent = mergeObject.transform.parent;
                 mergeObject.transform.SetParent(transform.parent);
                 transform.SetParent(newParent);
@@ -43,8 +48,7 @@ public class DropMergeObject : TTMonoBehaviour, IOnTouchEnded
             }
             else
             {
-                transform.SetParent(slot.transform);
-
+                slot.PutIn(mergeController);
                 this.MoveToLocalPosition(Vector3.zero);
             }
         }

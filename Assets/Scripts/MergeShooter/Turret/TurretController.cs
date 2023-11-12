@@ -31,13 +31,13 @@ public class TurretController : EntityController
         lvText = Instantiate(lvCtrl, transform).GetComponentInChildren<TextMesh>();
 
         var collider = this.AddComponent<CircleCollider2D>();
-        collider.radius = ObjectMergeController.DistanceMerge;
+        collider.radius = MergeObjectController.DistanceMerge;
     }
 
     private void Start()
     {
         Level = info.Level;
-        cooldownAttack = 1000.0f / (float)statCtrl.GetStatByID("ASPD").FinalValue;
+        cooldownAttack = 1000.0f / (float)statCtrl.GetStatByID(DefineStatID.ASPD).FinalValue;
     }
 
     private void Update()
@@ -46,17 +46,12 @@ public class TurretController : EntityController
         if (cooldownAttack <= 0)
         {
             Shoot();
-            cooldownAttack = 1000.0f / (float)statCtrl.GetStatByID("ASPD").FinalValue;
+            cooldownAttack = 1000.0f / (float)statCtrl.GetStatByID(DefineStatID.ASPD).FinalValue;
         }
         if(animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)
         {
             animator.Play("idle-" + Level.ToString());
         }
-        if (Input.GetMouseButtonDown(0) && Level < maxLv)
-        {
-            //Level += 1;
-        }
-
     }
 
     protected override void OnLevelUp(int level)

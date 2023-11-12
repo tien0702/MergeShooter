@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TurretMergeController : ObjectMergeController
+public class TurretMergeController : MergeObjectController
 {
     [SerializeField] float timeMove = 0.5f;
     [SerializeField] LeanTweenType moveType = LeanTweenType.easeOutQuint;
@@ -16,13 +16,13 @@ public class TurretMergeController : ObjectMergeController
         owner = transform.GetComponent<TurretController>();
     }
 
-    public override bool CanMerge(ObjectMergeController mergeObj)
+    public override bool CanMerge(MergeObjectController mergeObj)
     {
         TurretController turret = mergeObj.GetComponent<TurretController>();
         return owner.Level == turret.Level;
     }
 
-    public override void Merge(ObjectMergeController target, Action callbackOnCompleted)
+    public override void Merge(MergeObjectController target, Action callbackOnCompleted)
     {
         transform.SetParent(target.transform.parent);
 

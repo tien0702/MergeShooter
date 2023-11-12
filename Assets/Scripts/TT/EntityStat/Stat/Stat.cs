@@ -10,6 +10,8 @@ namespace TT.EntityStat.Base
         protected Dictionary<ModifiType, LinkedList<Bonus>> bonus = new Dictionary<ModifiType, LinkedList<Bonus>>();
         protected float finalValue;
 
+        HashSet<Action<float>> callbackOnChangeValue = new HashSet<Action<float>>();
+
         public StatInfo Info
         {
             get
@@ -19,7 +21,7 @@ namespace TT.EntityStat.Base
             set
             {
                 info = value;
-                finalValue = CalculateFinalValue();
+                CalculateFinalValue();
             }
         }
 
@@ -30,6 +32,24 @@ namespace TT.EntityStat.Base
             foreach (ModifiType modifi in Enum.GetValues(typeof(ModifiType)))
             {
                 bonus.Add(modifi, new LinkedList<Bonus>());
+            }
+        }
+
+        public virtual void CallbackOnChange(Action<float> callback)
+        {
+            callbackOnChangeValue.Add(callback);
+        }
+
+        public virtual void RemoveCallback(Action<float> callback)
+        {
+            callbackOnChangeValue.Remove(callback);
+        }
+
+        protected virtual void Callback()
+        {
+            foreach (var callback in callbackOnChangeValue)
+            {
+                if (callback != null) callback(finalValue);
             }
         }
 
@@ -54,44 +74,49 @@ namespace TT.EntityStat.Base
             }
 
             if (recalculateFinalValue)
-                finalValue = CalculateFinalValue();
+                CalculateFinalValue();
         }
 
         public virtual void AddBonus(Bonus bns)
         {
             if (bns == null) return;
             bonus[bns.Info.Modifi].AddLast(bns);
-            finalValue = CalculateFinalValue();
+            CalculateFinalValue();
         }
 
         public virtual void RemoveBonus(Bonus bns)
         {
             if (bns == null) return;
             bonus[bns.Info.Modifi].Remove(bns);
-            finalValue = CalculateFinalValue();
+            CalculateFinalValue();
         }
 
-        protected virtual float CalculateFinalValue()
+        protected virtual void CalculateFinalValue()
         {
-            if (bonus[ModifiType.Absolute].Count > 0)
-                return bonus[ModifiType.Absolute].Last.Value.Info.Value;
-
             float newFinalValue = 0;
-            float baseValue = info.BaseValue;
-            float percentValue = 0;
-            float numberValue = 0;
+            if (bonus[ModifiType.Absolute].Count > 0)
+            {
+                newFinalValue = bonus[ModifiType.Absolute].Last.Value.Info.Value;
+            }
+            else
+            {
+                float baseValue = info.BaseValue;
+                float percentValue = 0;
+                float numberValue = 0;
 
-            LinkedList<Bonus> bnsBase = bonus[ModifiType.BaseValue];
-            LinkedList<Bonus> bnsPercent = bonus[ModifiType.Percent];
-            LinkedList<Bonus> bnsNum = bonus[ModifiType.Number];
+                LinkedList<Bonus> bnsBase = bonus[ModifiType.BaseValue];
+                LinkedList<Bonus> bnsPercent = bonus[ModifiType.Percent];
+                LinkedList<Bonus> bnsNum = bonus[ModifiType.Number];
 
-            foreach (Bonus bns in bnsBase) { baseValue += bns.Info.Value; }
-            foreach (Bonus bns in bnsPercent) { percentValue += bns.Info.Value; }
-            foreach (Bonus bns in bnsNum) { numberValue += bns.Info.Value; }
+                foreach (Bonus bns in bnsBase) { baseValue += bns.Info.Value; }
+                foreach (Bonus bns in bnsPercent) { percentValue += bns.Info.Value; }
+                foreach (Bonus bns in bnsNum) { numberValue += bns.Info.Value; }
 
-            newFinalValue = baseValue + (baseValue * (percentValue / 100f)) + numberValue;
+                newFinalValue = baseValue + (baseValue * (percentValue / 100f)) + numberValue;
+            }
 
-            return newFinalValue;
+            finalValue = newFinalValue;
+            Callback();
         }
     }
 }
