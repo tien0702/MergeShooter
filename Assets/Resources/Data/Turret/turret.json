@@ -1,0 +1,244 @@
+{
+    "data" : [
+        [
+            {
+                "StatID": "ATK",
+                "BaseValue": 10,
+                "MaxFinalValue": 1000
+            },
+            {
+                "StatID": "ASPD",
+                "BaseValue": 1000,
+                "MaxFinalValue": 1000
+            }
+        ],
+        [
+            {
+                "StatID": "ATK",
+                "BaseValue": 10,
+                "MaxFinalValue": 1000
+            },
+            {
+                "StatID": "ASPD",
+                "BaseValue": 1500,
+                "MaxFinalValue": 1000
+            }
+        ],
+        [
+            {
+                "StatID": "ATK",
+                "BaseValue": 10,
+                "MaxFinalValue": 1000
+            },
+            {
+                "StatID": "ASPD",
+                "BaseValue": 1500,
+                "MaxFinalValue": 10000
+            }
+        ],
+        [
+            {
+                "StatID": "ATK",
+                "BaseValue": 10,
+                "MaxFinalValue": 1000
+            },
+            {
+                "StatID": "ASPD",
+                "BaseValue": 1500,
+                "MaxFinalValue": 10000
+            }
+        ],
+        [
+            {
+                "StatID": "ATK",
+                "BaseValue": 10,
+                "MaxFinalValue": 1000
+            },
+            {
+                "StatID": "ASPD",
+                "BaseValue": 1500,
+                "MaxFinalValue": 10000
+            }
+        ],
+        [
+            {
+                "StatID": "ATK",
+                "BaseValue": 10,
+                "MaxFinalValue": 1000
+            },
+            {
+                "StatID": "ASPD",
+                "BaseValue": 1000,
+                "MaxFinalValue": 1000
+            }
+        ],
+        [
+            {
+                "StatID": "ATK",
+                "BaseValue": 10,
+                "MaxFinalValue": 1000
+            },
+            {
+                "StatID": "ASPD",
+                "BaseValue": 1500,
+                "MaxFinalValue": 1000
+            }
+        ],
+        [
+            {
+                "StatID": "ATK",
+                "BaseValue": 10,
+                "MaxFinalValue": 1000
+            },
+            {
+                "StatID": "ASPD",
+                "BaseValue": 1500,
+                "MaxFinalValue": 10000
+            }
+        ],
+        [
+            {
+                "StatID": "ATK",
+                "BaseValue": 10,
+                "MaxFinalValue": 1000
+            },
+            {
+                "StatID": "ASPD",
+                "BaseValue": 1500,
+                "MaxFinalValue": 10000
+            }
+        ],
+        [
+            {
+                "StatID": "ATK",
+                "BaseValue": 10,
+                "MaxFinalValue": 1000
+            },
+            {
+                "StatID": "ASPD",
+                "BaseValue": 1500,
+                "MaxFinalValue": 10000
+            }
+        ],
+        [
+            {
+                "StatID": "ATK",
+                "BaseValue": 10,
+                "MaxFinalValue": 1000
+            },
+            {
+                "StatID": "ASPD",
+                "BaseValue": 1000,
+                "MaxFinalValue": 1000
+            }
+        ],
+        [
+            {
+                "StatID": "ATK",
+                "BaseValue": 10,
+                "MaxFinalValue": 1000
+            },
+            {
+                "StatID": "ASPD",
+                "BaseValue": 1500,
+                "MaxFinalValue": 1000
+            }
+        ],
+        [
+            {
+                "StatID": "ATK",
+                "BaseValue": 10,
+                "MaxFinalValue": 1000
+            },
+            {
+                "StatID": "ASPD",
+                "BaseValue": 1500,
+                "MaxFinalValue": 10000
+            }
+        ],
+        [
+            {
+                "StatID": "ATK",
+                "BaseValue": 10,
+                "MaxFinalValue": 1000
+            },
+            {
+                "StatID": "ASPD",
+                "BaseValue": 1500,
+                "MaxFinalValue": 10000
+            }
+        ],
+        [
+            {
+                "StatID": "ATK",
+                "BaseValue": 10,
+                "MaxFinalValue": 1000
+            },
+            {
+                "StatID": "ASPD",
+                "BaseValue": 1500,
+                "MaxFinalValue": 10000
+            }
+        ],
+        [
+            {
+                "StatID": "ATK",
+                "BaseValue": 10,
+                "MaxFinalValue": 1000
+            },
+            {
+                "StatID": "ASPD",
+                "BaseValue": 1000,
+                "MaxFinalValue": 1000
+            }
+        ],
+        [
+            {
+                "StatID": "ATK",
+                "BaseValue": 10,
+                "MaxFinalValue": 1000
+            },
+            {
+                "StatID": "ASPD",
+                "BaseValue": 1500,
+                "MaxFinalValue": 1000
+            }
+        ],
+        [
+            {
+                "StatID": "ATK",
+                "BaseValue": 10,
+                "MaxFinalValue": 1000
+            },
+            {
+                "StatID": "ASPD",
+                "BaseValue": 1500,
+                "MaxFinalValue": 10000
+            }
+        ],
+        [
+            {
+                "StatID": "ATK",
+                "BaseValue": 10,
+                "MaxFinalValue": 1000
+            },
+            {
+                "StatID": "ASPD",
+                "BaseValue": 1500,
+                "MaxFinalValue": 10000
+            }
+        ],
+        [
+            {
+                "StatID": "ATK",
+                "BaseValue": 10,
+                "MaxFinalValue": 1000
+            },
+            {
+                "StatID": "ASPD",
+                "BaseValue": 1500,
+                "MaxFinalValue": 10000
+            }
+        ]
+    ]
+}
