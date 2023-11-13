@@ -1,0 +1,16 @@
+{
+    "data" : [
+        [
+            {
+                "StatID": "HP",
+                "BaseValue": 50,
+                "MaxFinalValue": 1000
+            },
+            {
+                "StatID": "SPD",
+                "BaseValue": 2,
+                "MaxFinalValue": 100
+            }
+        ]
+    ]
+}

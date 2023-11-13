@@ -1,24 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
+using TT.DesignPattern;
 using UnityEngine;
 
-public class RoadController : MonoBehaviour
+public class RoadController : SingletonBehaviour<RoadController>
 {
-    static List<RoadController> _roads = new List<RoadController>();
-
-    public static void AddRoad(RoadController road)
+    List<Transform> _roads = new List<Transform>();
+    protected override void Awake()
     {
-        _roads.Add(road);
+        base.Awake();
+        foreach(Transform road in transform)
+        {
+            _roads.Add(road);
+        }
     }
 
-    public static RoadController GetRoad(int index)
+
+    public Transform GetRoad(int index)
     {
         if (index < 0 || index >= _roads.Count) return null;
         return _roads[index];
-    }
-
-    private void Awake()
-    {
-        RoadController.AddRoad(this);
     }
 }

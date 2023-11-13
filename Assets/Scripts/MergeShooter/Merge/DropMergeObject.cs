@@ -7,50 +7,118 @@ using UnityEngine;
 public class DropMergeObject : TTMonoBehaviour, IOnTouchEnded
 {
     [SerializeField] LayerMask slotMask;
+    [SerializeField] GameObject mergeFx;
 
-    MergeObjectController mergeController;
+    MergeController mergeController;
 
     private void Awake()
     {
-        mergeController = GetComponent<MergeObjectController>();
+        mergeController = GetComponent<MergeController>();
     }
 
     public void OnTouchEnded()
     {
-        var mergeObject = MergeObjectController.GetMergeNearest(mergeController);
-        if (mergeObject != null)
+        /*      var canMergeObject = MergeController.GetMergeNearest(mergeController);
+                var curSlot = GetComponentInParent<SlotMergeController>();
+                if (canMergeObject != null)
+                {
+                    var newSlot = canMergeObject.GetComponentInParent<SlotMergeController>();
+                    if (mergeController.CanMerge(canMergeObject))
+                    {
+                        Debug.Log("merge");
+                        curSlot.TakeOut();
+                        var mergeObj = newSlot.TakeOut();
+                        Debug.Log(newSlot.PutIn(mergeController));
+
+                        this.MoveToLocalPosition(Vector3.zero, () =>
+                        {
+                            mergeController.Merge(mergeObj, null);
+                            Destroy(mergeObj.gameObject);
+                            var fx = Instantiate(mergeFx, transform);
+                            fx.transform.localPosition = Vector3.zero;
+                        });
+                    }
+                    else
+                    {
+                        Debug.Log("swap");
+                        curSlot.TakeOut();
+                        newSlot.TakeOut();
+
+                        Debug.Log(newSlot.PutIn(mergeController));
+                        Debug.Log(curSlot.PutIn(canMergeObject));
+
+                        this.MoveToLocalPosition(Vector3.zero);
+                        LeanTween.moveLocal(canMergeObject.gameObject, Vector3.zero, this.time).setEase(this.leanTweenType);
+                    }
+                }
+                else
+                {
+                    SlotMergeController slot = GetHitSlotMerge();
+
+                    if (slot == null || slot.transform.Equals(curSlot.transform))
+                    {
+                        Debug.Log("back");
+                        this.MoveToLocalPosition(Vector3.zero);
+                    }
+                    else
+                    {
+                        Debug.Log("chage slot");
+                        curSlot.TakeOut();
+                        Debug.Log(slot.PutIn(mergeController));
+
+                        this.MoveToLocalPosition(Vector3.zero);
+                    }
+                }*/
+
+        // -----------------------------------
+
+
+        SlotMergeController hitSlot = GetHitSlotMerge();
+        if (hitSlot != null)
         {
-            if (mergeController.CanMerge(mergeObject))
+            var curSlot = GetComponentInParent<SlotMergeController>();
+            if (hitSlot.ObjInSlot != null)
             {
-                var newSlot = mergeObject.GetComponentInParent<SlotMergeController>();
-                mergeController.Merge(mergeObject, () => {
-                    newSlot.PutIn(mergeController);
-                });
+                if (mergeController.CanMerge(hitSlot.ObjInSlot))
+                {
+                    curSlot.TakeOut();
+                    var mergeObj = hitSlot.TakeOut();
+                    Debug.Log(hitSlot.PutIn(mergeController));
+
+                    this.MoveToLocalPosition(Vector3.zero, () =>
+                    {
+                        mergeController.Merge(mergeObj, null);
+                        Destroy(mergeObj.gameObject);
+                        var fx = Instantiate(mergeFx, transform);
+                        fx.transform.localPosition = Vector3.zero;
+                    });
+                }
+                else
+                {
+                    Debug.Log("swap");
+                    curSlot.TakeOut();
+                    MergeController mergeObj = hitSlot.TakeOut();
+
+                    Debug.Log(hitSlot.PutIn(mergeController));
+                    Debug.Log(curSlot.PutIn(mergeObj));
+
+                    this.MoveToLocalPosition(Vector3.zero);
+                    LeanTween.moveLocal(mergeObj.gameObject, Vector3.zero, this.time).setEase(this.leanTweenType);
+                }
             }
             else
             {
-                mergeController.GetComponentInParent<SlotMergeController>();
-                mergeObject.GetComponentInParent<SlotMergeController>();
-                Transform newParent = mergeObject.transform.parent;
-                mergeObject.transform.SetParent(transform.parent);
-                transform.SetParent(newParent);
+                Debug.Log("change");
+                curSlot.TakeOut();
+                Debug.Log(hitSlot.PutIn(mergeController));
 
                 this.MoveToLocalPosition(Vector3.zero);
-                LeanTween.moveLocal(mergeObject.gameObject, Vector3.zero, this.time).setEase(this.leanTweenType);
             }
         }
         else
         {
-            SlotMergeController slot = GetHitSlotMerge();
-            if (slot == null)
-            {
-                this.MoveToLocalPosition(Vector3.zero);
-            }
-            else
-            {
-                slot.PutIn(mergeController);
-                this.MoveToLocalPosition(Vector3.zero);
-            }
+            Debug.Log("back");
+            this.MoveToLocalPosition(Vector3.zero);
         }
     }
 

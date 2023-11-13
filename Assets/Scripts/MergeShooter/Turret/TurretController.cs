@@ -31,7 +31,7 @@ public class TurretController : EntityController
         lvText = Instantiate(lvCtrl, transform).GetComponentInChildren<TextMesh>();
 
         var collider = this.AddComponent<CircleCollider2D>();
-        collider.radius = MergeObjectController.DistanceMerge;
+        collider.radius = MergeController.DistanceMerge;
     }
 
     private void Start()

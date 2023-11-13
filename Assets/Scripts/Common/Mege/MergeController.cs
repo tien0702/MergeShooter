@@ -4,29 +4,29 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public abstract class MergeObjectController : MonoBehaviour
+public abstract class MergeController : MonoBehaviour
 {
     #region ObjectMerge Manager
-    protected static List<MergeObjectController> _merges = new List<MergeObjectController>();
-    public static List<MergeObjectController> Merges => _merges;
+    protected static List<MergeController> _merges = new List<MergeController>();
+    public static List<MergeController> Merges => _merges;
 
-    public static float DistanceMerge = 0.5f;
+    public static float DistanceMerge = 0.4f;
 
-    public static void AddMergeObject(MergeObjectController newMergeObject)
+    public static void AddMergeObject(MergeController newMergeObject)
     {
         _merges.Add(newMergeObject);
     }
 
-    public static void RemoveMergeObject(MergeObjectController mergeObject)
+    public static void RemoveMergeObject(MergeController mergeObject)
     {
         _merges.Remove(mergeObject);
     }
 
-    public static MergeObjectController GetMergeNearest(MergeObjectController mergeTarget)
+    public static MergeController GetMergeNearest(MergeController mergeTarget)
     {
-        MergeObjectController result = null;
+        MergeController result = null;
         float minDistance = 1000;
-        foreach (MergeObjectController mergeObj in _merges)
+        foreach (MergeController mergeObj in _merges)
         {
             if (mergeTarget == mergeObj) continue;
             float distance = Vector3.Distance(mergeObj.transform.position, mergeTarget.transform.position);
@@ -40,11 +40,11 @@ public abstract class MergeObjectController : MonoBehaviour
         return result;
     }
 
-    public static MergeObjectController GetMergeable(MergeObjectController mergeTarget)
+    public static MergeController GetMergeable(MergeController mergeTarget)
     {
-        MergeObjectController result = null;
+        MergeController result = null;
         float minDistance = 1000;
-        foreach (MergeObjectController mergeObj in _merges)
+        foreach (MergeController mergeObj in _merges)
         {
             if (mergeTarget == mergeObj) continue;
             float distance = Vector3.Distance(mergeObj.transform.position, mergeTarget.transform.position);
@@ -59,11 +59,11 @@ public abstract class MergeObjectController : MonoBehaviour
         return result;
     }
 
-    public static List<MergeObjectController> GetMergeables(MergeObjectController mergeTarget)
+    public static List<MergeController> GetMergeables(MergeController mergeTarget)
     {
-        List<MergeObjectController> result = new List<MergeObjectController>();
+        List<MergeController> result = new List<MergeController>();
 
-        foreach (MergeObjectController mergeObj in _merges)
+        foreach (MergeController mergeObj in _merges)
         {
             if (mergeTarget == mergeObj) continue;
             if (!mergeObj.CanMerge(mergeTarget)) continue;
@@ -77,15 +77,15 @@ public abstract class MergeObjectController : MonoBehaviour
     
     protected virtual void Awake()
     {
-        MergeObjectController.AddMergeObject(this);
+        MergeController.AddMergeObject(this);
     }
 
     protected virtual void OnDestroy()
     {
-        MergeObjectController.RemoveMergeObject(this);
+        MergeController.RemoveMergeObject(this);
     }
 
-    public abstract bool CanMerge(MergeObjectController mergeObj);
+    public abstract bool CanMerge(MergeController mergeObj);
 
-    public abstract void Merge(MergeObjectController target, Action callbackOnCompleted);
+    public abstract void Merge(MergeController target, Action callbackOnCompleted);
 }

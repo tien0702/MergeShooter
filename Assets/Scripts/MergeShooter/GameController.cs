@@ -20,6 +20,8 @@ public class GameController : SingletonBehaviour<GameController>
     {
         Observer.Instance.AddObserver(OBSERVER_TOPIC.ON_ENEMY_DIE, OnEnemyDie);
         Observer.Instance.AddObserver(OBSERVER_TOPIC.ON_ENEMY_TOUCH_WALL, OnEnemyTouchWall);
+
+        WaveController.Instance.StartWaveAt(0);
     }
 
     protected override void OnDestroy()

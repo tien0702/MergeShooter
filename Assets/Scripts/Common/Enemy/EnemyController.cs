@@ -15,7 +15,10 @@ public class EnemyController : EntityController, IHit
         base.Awake();
 
         info.Level = 1;
-        info.Name = "monster-1";
+        var modelPrefab = Resources.Load<Transform>("Prefabs/Enemies/" + info.Name);
+        var model = Instantiate(modelPrefab, transform);
+        model.GetComponent<Animator>().Play(info.Name);
+
         statCtrl = this.GetComponent<StatController>();
         healthCtrl = transform.GetComponentInChildren<HealthController>();
         healthCtrl.OnDie = this.OnDie;
@@ -27,7 +30,6 @@ public class EnemyController : EntityController, IHit
         {
             healthCtrl.Health = newVal;
         });
-
     }
 
     public void TakeHit(EntityController attacker)

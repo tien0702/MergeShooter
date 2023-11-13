@@ -7,7 +7,8 @@ using UnityEngine;
 public class BoardMergeController : MonoBehaviour
 {
     [SerializeField] protected string layerName;
-    string boardType;
+    [SerializeField] string boardType;
+    public string BoardType => boardType;
     List<SlotMergeController> slots = new List<SlotMergeController>();
 
     protected virtual void Awake()
@@ -16,9 +17,10 @@ public class BoardMergeController : MonoBehaviour
         foreach (Transform child in transform)
         {
             if (layer != -1) child.gameObject.layer = layer;
-            slots.Add(child.AddComponent<SlotMergeController>());
-            CircleCollider2D collider = child.AddComponent<CircleCollider2D>();
-            collider.radius = MergeObjectController.DistanceMerge;
+            var slot = child.AddComponent<SlotMergeController>();
+            slots.Add(slot);
+            BoxCollider2D collider = child.AddComponent<BoxCollider2D>();
+            collider.size = Vector2.one * 2 * MergeController.DistanceMerge;
         }
     }
 
