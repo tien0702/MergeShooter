@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TT.Base;
+using TT;
 using System;
 
 namespace TT.Process.Base

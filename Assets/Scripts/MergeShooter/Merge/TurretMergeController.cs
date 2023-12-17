@@ -1,7 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
 public class TurretMergeController : MergeController
 {
@@ -16,7 +13,10 @@ public class TurretMergeController : MergeController
     public override bool CanMerge(MergeController mergeObj)
     {
         TurretController turret = mergeObj.GetComponent<TurretController>();
-        return owner.Level == turret.Level;
+
+        int maxLv = EnemyController.GetEntityTypeVO(owner.Type).GetBaseSingleVO(owner.EntityName).LengthArray;
+
+        return owner.Level == turret.Level && owner.Level < maxLv;
     }
 
     public override void Merge(MergeController target, Action callbackOnCompleted)

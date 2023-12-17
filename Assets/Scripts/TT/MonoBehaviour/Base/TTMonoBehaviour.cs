@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace TT.Base
+namespace TT
 {
     public class TTMonoBehaviour : MonoBehaviour
     {

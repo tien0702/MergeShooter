@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TT.Entity;
 using TT.DesignPattern;
+using TMPro;
 
 [System.Serializable]
 public class EnemyWaveInfo
@@ -20,7 +21,21 @@ public class WaveInfo
 
 public class WaveController : SingletonBehaviour<WaveController>
 {
-    public WaveInfo[] waveInfos;
+    #region Observer
+    public enum WaveEventType { OnStartWave, OnCleared }
+    private ObserverEvents<WaveEventType, int> waveEvent = new ObserverEvents<WaveEventType, int>();
+    public ObserverEvents<WaveEventType, int> WaveEvent => waveEvent;
+
+    #endregion
+
+    [SerializeField] private TextMeshProUGUI waveTxt;
+
+    WaveInfo[] waveInfos;
+    int currentWave;
+    public int MaxWaves => waveInfos.Length;
+
+    List<EnemyController> enemies = new List<EnemyController>();
+    int countEnemies;
 
     protected override void Awake()
     {
@@ -31,24 +46,26 @@ public class WaveController : SingletonBehaviour<WaveController>
     private void Start()
     {
         Observer.Instance.AddObserver(OBSERVER_TOPIC.ON_ENEMY_DIE, OnEnemyDie);
-        Observer.Instance.AddObserver(OBSERVER_TOPIC.ON_ENEMY_TOUCH_WALL, OnEnemyTouchWall);
     }
 
     protected override void OnDestroy()
     {
+        base.OnDestroy();
         Observer.Instance.RemoveObserver(OBSERVER_TOPIC.ON_ENEMY_DIE, OnEnemyDie);
-        Observer.Instance.RemoveObserver(OBSERVER_TOPIC.ON_ENEMY_TOUCH_WALL, OnEnemyTouchWall);
     }
 
     public void StartWaveAt(int index)
     {
         if (index < 0 || index >= waveInfos.Length)
         {
-
+            waveEvent.Notify(WaveEventType.OnCleared, waveInfos.Length);
         }
         else
         {
+            currentWave = index;
+            waveTxt.text = "wave " + (index + 1).ToString();
             WaveInfo wave = waveInfos[index];
+            countEnemies = wave.Enemies.Length;
             StartCoroutine(GenerateWave(wave));
         }
     }
@@ -56,25 +73,30 @@ public class WaveController : SingletonBehaviour<WaveController>
     IEnumerator GenerateWave(WaveInfo wave)
     {
         var enemyPrefab = Resources.Load<EnemyController>("Prefabs/EnemyController");
-        EnemyWaveInfo[] enemies = wave.Enemies;
-        for (int i = 0; i < enemies.Length; ++i)
+        EnemyWaveInfo[] enemyInfos = wave.Enemies;
+        for (int i = 0; i < enemyInfos.Length; ++i)
         {
-            Transform road = RoadController.Instance.GetRoad(enemies[i].RoadIndex);
+            Transform road = RoadController.Instance.GetRoad(enemyInfos[i].RoadIndex);
             var enemy = Instantiate(enemyPrefab, road);
-            enemy.Info = enemies[i].EnemyInfo;
+            enemies.Add(enemy);
+            enemy.Info = enemyInfos[i].EnemyInfo;
             enemy.transform.localPosition = Vector3.zero;
-            yield return new WaitForSeconds(enemies[i].DelaySpawn);
+            yield return new WaitForSeconds(enemyInfos[i].DelaySpawn);
         }
         yield return null;
     }
 
     void OnEnemyDie(object data)
     {
-
+        --countEnemies;
+        if (countEnemies == 0)
+        {
+            OnCleared();
+        }
     }
 
-    void OnEnemyTouchWall(object data)
+    void OnCleared()
     {
-
+        waveEvent.Notify(WaveEventType.OnCleared, currentWave);
     }
 }

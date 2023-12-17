@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TT.DesignPattern;
 using UnityEngine;
 
 public class WallController : MonoBehaviour
@@ -7,13 +8,9 @@ public class WallController : MonoBehaviour
     [SerializeField] private LayerMask layerMask;
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("wall");
-        if (collision.gameObject.layer != layerMask.value) { return; }
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        Debug.Log("Collision");
-        if (collision.gameObject.layer != layerMask.value) { return; }
+        if (collision.gameObject.layer != LayerMask.NameToLayer("Enemy")) { return; }
+        var enemy = collision.transform.GetComponentInParent<EnemyController>();
+        enemy.HealthCtrl.CurrentValue -= int.MaxValue;
+        Observer.Instance.NotifyWithData(OBSERVER_TOPIC.ON_ENEMY_TOUCH_WALL, enemy);
     }
 }

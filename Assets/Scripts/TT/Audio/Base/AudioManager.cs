@@ -3,7 +3,7 @@ using TT.DesignPattern;
 using System;
 using TT.DAL;
 
-namespace TT.Audio.Base
+namespace TT
 {
     [RequireComponent(typeof(AudioSource))]
     public class AudioManager : SingletonBehaviour<AudioManager>

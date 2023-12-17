@@ -115,7 +115,7 @@ namespace TT.EntityStat.Base
                 newFinalValue = baseValue + (baseValue * (percentValue / 100f)) + numberValue;
             }
 
-            finalValue = newFinalValue;
+            finalValue = Math.Min(newFinalValue, this.info.MaxFinalValue);
             Callback();
         }
     }

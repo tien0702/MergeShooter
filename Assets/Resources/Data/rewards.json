@@ -1,0 +1,44 @@
+{
+    "data": [
+        {
+            "BonusEarnings": 100,
+            "TotalEarnings": 150
+        },
+        {
+            "BonusEarnings": 150,
+            "TotalEarnings": 200
+        },
+        {
+            "BonusEarnings": 200,
+            "TotalEarnings": 250
+        },
+        {
+            "BonusEarnings": 250,
+            "TotalEarnings": 300
+        },
+        {
+            "BonusEarnings": 300,
+            "TotalEarnings": 350
+        },
+        {
+            "BonusEarnings": 350,
+            "TotalEarnings": 400
+        },
+        {
+            "BonusEarnings": 400,
+            "TotalEarnings": 450
+        },
+        {
+            "BonusEarnings": 450,
+            "TotalEarnings": 500
+        },
+        {
+            "BonusEarnings": 500,
+            "TotalEarnings": 550
+        },
+        {
+            "BonusEarnings": 550,
+            "TotalEarnings": 600
+        }
+    ]
+}

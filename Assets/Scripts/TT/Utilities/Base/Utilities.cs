@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace TT.Utilities.Base
+namespace TT.Utilities
 {
     public class Utilities
     {

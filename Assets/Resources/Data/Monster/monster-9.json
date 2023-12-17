@@ -3,7 +3,7 @@
         [
             {
                 "StatID": "HP",
-                "BaseValue": 50,
+                "BaseValue": 260,
                 "MaxFinalValue": 1000
             },
             {

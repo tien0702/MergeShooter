@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TT.Entity;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -22,6 +23,15 @@ public class BoardMergeController : MonoBehaviour
             BoxCollider2D collider = child.AddComponent<BoxCollider2D>();
             collider.size = Vector2.one * 2 * MergeController.DistanceMerge;
         }
+    }
+
+    public bool IsFull()
+    {
+        foreach(var slot in slots)
+        {
+            if (slot.ObjInSlot != null) return false;
+        }
+        return true;
     }
 
     public SlotMergeController[] GetEmptySlots()

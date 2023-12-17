@@ -2,16 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TT.Entity;
-using Unity.VisualScripting;
 using UnityEngine.UI;
 using TT.EntityStat.Base;
+using TT.DesignPattern;
+using Unity.VisualScripting;
 
 public class TurretController : EntityController
 {
-    public int maxLv;
     [SerializeField] protected GameObject model;
     [SerializeField] protected TextMesh lvText;
-
 
     [SerializeField] protected GameObject lvUpFx;
     [SerializeField] protected GameObject shootFx;
@@ -42,8 +41,10 @@ public class TurretController : EntityController
 
     private void Update()
     {
-        cooldownAttack -= Time.deltaTime;
-        if (cooldownAttack <= 0)
+        if(cooldownAttack > 0) cooldownAttack -= Time.deltaTime;
+        if (cooldownAttack <= 0 
+            && transform.GetComponentInParent<BoardMergeController>() != null
+            && transform.GetComponentInParent<BoardMergeController>().BoardType.Equals("BattleType"))
         {
             Shoot();
             cooldownAttack = 1000.0f / (float)statCtrl.GetStatByID(DefineStatID.ASPD).FinalValue;

@@ -10,6 +10,8 @@ public class EnemyController : EntityController, IHit
 {
     [SerializeField] protected GameObject deadFx;
     [SerializeField] protected HealthController healthCtrl;
+
+    public HealthController HealthCtrl => healthCtrl;
     protected override void Awake()
     {
         base.Awake();
